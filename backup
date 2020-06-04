@@ -1,0 +1,41 @@
+#/bin/bash
+
+# runs from ~
+# todo: r_sync tar encrypted versions
+
+_options=-av
+_check=--dry-run
+_mirror=--delete
+_source=/Users/taha
+_backup_destination=/Volumes/Moi/home
+_no_cache=--exclude='Library'
+_no_fuck=--exclude='Arete'
+
+
+
+# todo 1* encrypt somethings
+
+
+# todo 2* backup
+case $1 in
+    "start")
+        rsync $_options  $_no_cache $_no_fuck --exclude='.vim/bundle/YouCompleteMe' --exclude='.vim/bundle/Command-T' --exclude='.vim/view' --exclude='.bash_sessions' $_source/ $_backup_destination
+    ;;
+    "delete_extra_files")
+        rsync $_options $_no_cache  $_mirror $_source/ $_backup_destination
+
+    ;;
+    *)
+        # run without options to check
+        rsync $_options  $_no_cache --exclude='.vim/bundle/YouCompleteMe' --exclude='.vim/bundle/Command-T' --exclude='.vim/view' --exclude='.bash_sessions' $_check  $_source/ $_backup_destination
+esac
+
+
+
+: '
+rsync $_options  $_no_cache
+    --exclude='.vim/bundle/YouCompleteMe'
+    --exclude='.vim/bundle/Command-T'
+    --exclude='.bash_sessions'
+    --exclude='.vim/view' $_check  $_source/ $_backup_destination
+'

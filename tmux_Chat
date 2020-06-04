@@ -1,0 +1,15 @@
+#!/bin/bash
+SESSION='cpp'
+
+# The project root
+ROOT=~/cs/c++/side_projects/IM
+
+cd $ROOT
+tmux -2 new-session -d -s $SESSION
+
+tmux rename-window 'vim'
+tmux split-window -h -p 30
+tmux select-pane -t 0
+tmux send-key "vim" C-m
+
+tmux -2 attach-session -t $SESSION

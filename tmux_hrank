@@ -1,0 +1,16 @@
+#!/bin/bash
+SESSION='hrank'
+
+# The project root
+ROOT=~/cs/c++/hackerrank
+
+cd $ROOT
+tmux -2 new-session -d -s $SESSION
+
+tmux rename-window 'vim'
+tmux split-window -v -p 30
+tmux send-key "g++ -Wall -std=c++14 problem.cpp; ./a.out" C-m
+tmux select-pane -t 0
+tmux send-key "vim problem.cpp"
+
+tmux -2 attach-session -t $SESSION

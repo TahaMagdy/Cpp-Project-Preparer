@@ -1,0 +1,33 @@
+#!/bin/bash
+
+DIR_PROJECT=$1
+DIR_BUILD=build
+WAIT_TIME=0.3
+PATH_TEMPLATES=~/.vim/project-templates
+
+echo "Setting up your a C++ project"
+
+if [ "$DIR_PROJECT" != "" ] && [ "$DIR_PROJECT" != "here" ]; then
+    # $ cpp_project directoryProjectName
+    if [ -d "$1" ]; then echo "** Directory already exist, choose another name."; exit 1; fi
+
+    echo "** Creating Project Directory"; sleep $WAIT_TIME
+    mkdir $DIR_PROJECT
+    cd $DIR_PROJECT
+    echo "** Generating CMakeLists.txt"; sleep $WAIT_TIME
+    cp $PATH_TEMPLATES/CMakeLists.txt .
+    echo "** Generating main.cpp"; sleep $WAIT_TIME
+    cp $PATH_TEMPLATES/main.cpp .
+    echo "** Generating Makefile"; sleep $WAIT_TIME
+    mkdir $DIR_BUILD
+    cd $DIR_BUILD
+    cmake ..
+    echo "** Generating compile_commands.json"; sleep $WAIT_TIME
+    cp compile_commands.json ..
+    cd ..
+    echo "[x] Ok, Good Luck."
+
+elif [ "$1" != "" ] && [ "$1" = "here" ]; then
+    # $ cpp_project here
+    echo "Creating a project here"
+fi
